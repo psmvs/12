@@ -1,0 +1,119 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node * next,*prev;
+} ;
+typedef struct node*nodeptr;
+void insert(nodeptr r,int d)
+{
+    nodeptr n=(nodeptr)malloc(sizeof(struct node));
+    n->data=d;
+    n->next=r->next;
+    n->prev=r;
+    if(r->next!=NULL)
+    {
+        r->next->prev=n;
+        r->next=n;
+    }
+    else
+    {
+        n->prev=r;
+        r->next=n;
+    }
+}
+void display(nodeptr r)
+{
+    if(r->next==NULL)
+    {
+        printf("the double linked list is empty");
+        return;
+    }
+    nodeptr t=r;
+    printf("the elements are :\n");
+    do
+    {
+        r=r->next;
+        printf("%5d",r->data);
+    }
+    while(r->next!=NULL);
+}
+void search(nodeptr r,int k)
+{
+    int f=0;
+    r=r->next;
+    while(r!=NULL)
+    {
+    	 
+        if(r->data==k)
+        {
+            printf("\nelement is found");
+            f=1;
+            break;
+            
+        }
+      r=r->next;
+  }
+    if(f==0)
+    printf("\nelement is not found");
+}
+void deleteelememt(nodeptr r,int e)
+{
+    if(r->next==NULL)
+    {
+        printf("\nthe list is empty");
+        return;
+    }
+    r=r->next;
+    while(r!=NULL)
+    {
+    	
+        if(r->data==e)
+        {
+		    if(r->next!=NULL)
+		    {
+		        r->next->prev=r->prev;
+		        r->prev->next=r->next;
+		        free(r);
+		        return;
+		    }
+		    else
+		    {
+		        r->prev->next=NULL;
+		        free(r);
+		        return;
+		    }
+        }
+        r=r->next;
+    }
+    printf("\nthe element not found");
+}
+int main()
+{
+nodeptr r=(nodeptr)malloc(sizeof(struct node));
+int ch,d;
+
+r->next=NULL;
+r->prev=NULL;
+while(1)
+{
+    printf("\n1.insert\n2.delete\n3.search\n4.display\n5.exit\nenter your choice:\t");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+
+        case 1:printf("enter an element\t");
+        scanf("%d",&d);
+        insert(r,d);break;
+        case 2:printf("enter an element\t");
+        scanf("%d",&d);
+        deleteelememt(r,d);break;
+        case 3:printf("enter an element\t");
+        scanf("%d",&d);
+        search(r,d);break;
+        case 4:display(r);break;
+        case 5:exit(0);
+    }
+}
+}
