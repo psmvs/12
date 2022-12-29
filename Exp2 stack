@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 5
+struct stack
+{
+	int a[MAX];
+	int top;
+};
+typedef struct stack*STACK;
+int init(STACK S)
+{
+S->top=0;	
+}
+int ISFULL(STACK S)
+{
+	if(S->top==MAX)
+	return 1;
+	return 0;
+}
+int ISEMPTY(STACK S)
+{
+	if(S->top==0)
+	return 1;
+	return 0;
+}
+void push(STACK S)
+{
+	if(ISFULL(S))
+	{
+		printf("\n the stack is full");
+		return;
+	}
+	int n;
+	printf("\nenter an element to push:");
+	scanf("%d",&n);
+	S->a[S->top]=n;
+	S->top++;
+	printf("\nElement pushed succesfully");
+}
+void pop(STACK S)
+{
+if(ISEMPTY(S))
+{
+	printf("\nthe stack is empty");
+	return;
+}
+printf("\nthe poped element is:%d",S->a[--S->top]);
+}
+void display(STACK S)
+{
+	int i;
+	printf("\nthe element in the stack are:");
+	for(i=0;i<S->top;i++)
+	printf("%d\t",S->a[i]);
+}
+int main()
+{
+	STACK S=(STACK)malloc(sizeof(struct stack));
+	init(S);
+	int ch;
+	while(1)
+	{
+	printf("\n1.push\n2.pop\n3.display\n4.exit\nenter your choice\t");
+	scanf("%d",&ch);
+	switch(ch)
+	{
+		case 1:push(S);break;
+		case 2:pop(S);break;
+		case 3:display(S);break;
+		case 4:exit(0);
+	}
+	}
+}
