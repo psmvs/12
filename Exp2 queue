@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define max 5
+struct queue
+{
+	int a[max];
+	int front,rear;
+};
+typedef struct queue*QUEUE;
+void init(QUEUE q)
+{
+	q->front=q->rear=0;
+}
+int ISFULL(QUEUE q)
+{
+	if(q->rear==max)
+	return 1;
+	return 0;
+}
+int ISEMPTY(QUEUE q)
+{
+	if(q->front==q->rear)
+	{
+		printf("the queue is empty");
+		int(q);
+		return 1;
+	}
+	return 0;
+}
+	void enqueue(QUEUE q)
+	{
+		if(ISFULL(q))
+		{
+			printf("the queue is full");
+			return ;
+		}
+		int n;
+		printf("enter an element");
+		scanf("%d",&n);
+		q->a[q->rear++]=n;
+		printf("element inserted\n"); 
+    }
+    void dequeue(QUEUE q)
+    {
+    	if(ISEMPTY(q))
+    	{
+    		printf("the queue is empty");
+    		return;
+		}
+		printf("the deleted element is %d",q->a[q->front++]);
+	}
+	void display(QUEUE q)
+	{
+		int i;
+		printf("\nthe element of the queue:");
+		for(i=q->front;i<q->rear;i++)
+		printf("%d\t",q->a[i]);
+	}
+	int main()
+	{
+		QUEUE q=(QUEUE)malloc(sizeof(struct queue));
+		init(q);
+		int ch;
+		while(1)
+		{
+			printf("\n1.ENQUEUE\n2.DEQUEUE\n3.DISPLAY\n4.EXIT\nenter your choice\t");
+			scanf("%d",&ch);
+			switch(ch)
+			{
+				case 1:enqueue(q);break;
+				case 2:dequeue(q);break;
+				case 3:display(q);break;
+				case 4:exit(0);
+			}
+		}
+	}
+
