@@ -1,0 +1,80 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define max 5
+struct cqueue
+{
+int a[max];
+int f,r,count;
+};
+typedef struct cqueue*CQUEUE;
+void init (CQUEUE cq)
+{
+	cq->f=cq->r=cq->count=0;
+}
+int ISFULL(CQUEUE cq)
+{
+	if(cq->count==max)
+	return 1;
+	return 0;
+}
+int ISEMPTY(CQUEUE cq)
+{
+if(cq->count==0)
+return 1;
+return 0;
+}
+void enqueue(CQUEUE cq)
+{
+	if(ISFULL (cq))
+	{
+	printf("\nqueue is full\n");
+	return;
+	}
+	int n;
+	printf("enter an element:\t");
+	scanf("%d",&n);
+	cq->a[cq->r]=n;
+	cq->r=(cq->r+1)%max;
+	cq->count++;
+}
+void dequeue(CQUEUE cq)
+{
+if(ISEMPTY(cq))
+{
+	printf("\nqueue is empty\n");
+	return;
+}
+printf("the deleted element is: %d",cq->a[cq->f]);
+cq->f=(cq->f+1)%max;
+cq->count--;
+if(cq->f==cq->r)
+init(cq);
+}
+void display(CQUEUE cq)
+{
+int i,j;
+j=cq->f;
+for(i=1;i<=cq->count;i++)
+{
+printf("%d\t",cq->a[j]);
+j=(j+1)%max;
+}
+}
+int main()
+{
+	CQUEUE cq=(CQUEUE)malloc(sizeof(struct cqueue));
+	init(cq);
+	int ch;
+	while(1)
+	{
+	printf("\n1.enqueue\n2.dequeue\n3.display\n4.exit\nenter your choice:\t");
+	scanf("%d",&ch);
+	switch(ch)
+	 {
+		case 1:enqueue(cq);break;
+		case 2:dequeue(cq);break;
+		case 3:display(cq);break;
+		case 4:exit(0);
+	 }
+  } 
+}
