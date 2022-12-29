@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<stdlib.h>
+int partion(int *a,int p,int r)
+{
+	int i,j,temp,pivot;
+	pivot=a[r];
+	i=p-1;
+	for(j=p;j<=r-1;j++)
+	{
+		if(a[j]<pivot)
+		{
+			i++;
+			temp=a[i];
+			a[i]=a[j];
+			a[j]=temp;
+		}
+	}
+	temp=a[i+1];
+	a[i+1]=a[r];
+	a[r]=temp;
+	return(i+1);
+}
+void quicksort(int *a,int p,int r)
+{
+	int q;
+	if(p<r)
+	{
+		q=partion(a,p,r);
+		quicksort(a,p,q-1);
+		quicksort(a,q+1,r);
+	}
+}
+void readarray(int *a,int n)
+{
+	int i;
+	printf("enter %d elements\n");
+	for(i=1;i<=n;i++)
+	scanf("%d",&a[i]);
+}
+void printarray (int *a,int n)
+{
+	int i;
+	printf("the sorted array:");
+	for(i=1;i<=n;i++)
+	{
+		printf("%d\t",a[i]);
+	}
+}
+int main()
+{
+	int *a,n;
+	printf("enter number of elements:\n");
+	scanf("%d",&n);
+	a=(int *)malloc(sizeof(n+1)*sizeof(n));
+	readarray(a,n);
+	quicksort(a,1,n);
+	printarray(a,n);
+}
